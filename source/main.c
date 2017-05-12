@@ -31,6 +31,7 @@
 #include "buttons.h"
 #include "pin.h"
 #include "crypto.h"
+#include "killcount.h"
 
 extern CfgData configData;
 extern ConfigurationStatus needConfig;
@@ -53,6 +54,10 @@ void main(void)
         firmSource = FIRMWARE_SYSNAND;
         if(!mountFs(false, true)) error("Failed to mount SD and CTRNAND.");
         isSdMode = false;
+    }
+
+    if (isSdMode) {
+        checkKillCount();
     }
 
     //Attempt to read the configuration file
